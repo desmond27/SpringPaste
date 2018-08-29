@@ -31,6 +31,7 @@ public class SpringPasteSecurityConfiguration extends WebSecurityConfigurerAdapt
 				.antMatchers("/pastes").authenticated()
 				.antMatchers("/getAllPastes").authenticated()
 				.antMatchers("/admin").hasRole("ADMIN")
+				.antMatchers("/manageUsers").hasRole("ADMIN")
 				.antMatchers("/").authenticated()
 			.and()
 				.formLogin()
