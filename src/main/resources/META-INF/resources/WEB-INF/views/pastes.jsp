@@ -52,15 +52,13 @@
 			<th>Username</th>
 			<th>Timestamp</th>
 			<th>Public?</th>
-			<th>Permalinks</th>
 		</tr>
 		<c:forEach var="paste" items="${pastes}">
 			<tr>
-				<td>${paste.title}</td>
+				<td><a href="${pageContext.request.contextPath}/paste?id=${paste.id}">${paste.title}</a></td>
 				<td>${paste.username}</td>
 				<td><fmt:formatDate value="${paste.timestamp}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>${paste.publicPaste}</td>
-				<td><a href="${pageContext.request.contextPath}/paste?id=${paste.id}">Permalink</a></td>
 			</tr>
 		</c:forEach>
 	</table>
