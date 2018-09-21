@@ -48,6 +48,7 @@
 	<hr>
 	<table id="pastes">
 		<tr>
+			<th>Id</th>
 			<th>Title</th>
 			<th>Username</th>
 			<th>Timestamp</th>
@@ -55,6 +56,7 @@
 		</tr>
 		<c:forEach var="paste" items="${pastes}">
 			<tr>
+				<td>${paste.id}</td>
 				<td><a href="${pageContext.request.contextPath}/paste?id=${paste.id}">${paste.title}</a></td>
 				<td>${paste.username}</td>
 				<td><fmt:formatDate value="${paste.timestamp}" pattern="yyyy-MM-dd HH:mm:ss"/></td>

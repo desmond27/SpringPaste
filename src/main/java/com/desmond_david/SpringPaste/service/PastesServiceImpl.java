@@ -40,8 +40,8 @@ public class PastesServiceImpl implements PastesService {
 	}
 
 	@Override
+	@Transactional
 	public void deletePaste(int pasteId) {
-		// TODO Auto-generated method stub
-
+		pastesDAO.deletePaste(pasteId);
 	}
 }

@@ -7,7 +7,7 @@
 	<groupId>com.desmond_david</groupId>
 	<artifactId>SpringPaste</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>SpringPaste</name>
 	<description>A simple paste web app using Spring</description>

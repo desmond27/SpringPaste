@@ -50,12 +50,13 @@ public class PastesController {
 	}
 	
 	@GetMapping("/paste")
-	public String getPaste(@RequestParam(name="id") int id, Model model) {
+	public String getPaste(@RequestParam(name="id") int id, Model model, Principal principal) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		logger.info(">>>>> Requesting paste for id: " + id);
 		Paste p = pastesService.getPasteById(id);
 		logger.info(">>>>>Got paste: " + p.toString());
-		if(p.isPublicPaste()) {
-			p.setContent(p.getContent().replaceAll("\n", "<br />"));
+		if(p.isPublicPaste() || auth.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+			//p.setContent(p.getContent().replaceAll("\n", "<br />"));
 			model.addAttribute("paste", p);
 			return "view-paste";
 		}
@@ -80,6 +81,21 @@ public class PastesController {
 		model.addAttribute("paste", new Paste());
 		model.addAttribute("principal", principal);
 		return "new-paste";
+	}
+	
+	@GetMapping("/editPaste")
+	public String showEditPastePage(@RequestParam(name="id") int id, Model model, Principal principal) {
+		Paste paste = pastesService.getPasteById(id);
+		model.addAttribute("paste", paste);
+		model.addAttribute("principal", principal);
+		return "new-paste";
+	}
+	
+	@GetMapping("/deletePaste")
+	public String deletePaste(@RequestParam(name="id") int id, Model model) {
+		logger.info(">>>>>Deleting paste id: "+id);
+		pastesService.deletePaste(id);
+		return "redirect:/";
 	}
 	
 	@GetMapping("/users")

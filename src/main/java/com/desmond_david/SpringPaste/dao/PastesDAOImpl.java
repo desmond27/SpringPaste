@@ -47,8 +47,8 @@ public class PastesDAOImpl implements PastesDAO {
 
 	@Override
 	public void deletePaste(int pasteId) {
-		// TODO Auto-generated method stub
-
+		Session session = sessionFactory.getCurrentSession();
+		Paste p = session.get(Paste.class, pasteId);
+		session.delete(p);
 	}
-
 }
