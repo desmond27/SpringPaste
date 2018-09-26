@@ -14,4 +14,6 @@ public interface PastesDAO {
 	public void savePaste(Paste paste);
 	
 	public void deletePaste(int pasteId);
+
+	public void togglePasteById(int id);
 }

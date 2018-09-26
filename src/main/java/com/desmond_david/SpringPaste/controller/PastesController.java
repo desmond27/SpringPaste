@@ -40,6 +40,8 @@ public class PastesController {
 			logger.info(">>>>> User is NOT admin");
 			model.addAttribute("pastes", pastesService.getPastesByUser(auth.getName()));
 		}
+		model.addAttribute("principal", principal);
+		
 		return "pastes";
 	}
 	
@@ -95,6 +97,12 @@ public class PastesController {
 	public String deletePaste(@RequestParam(name="id") int id, Model model) {
 		logger.info(">>>>>Deleting paste id: "+id);
 		pastesService.deletePaste(id);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/togglePaste")
+	public String togglePaste(@RequestParam(name="id") int id, Model model) {
+		pastesService.togglePasteById(id);
 		return "redirect:/";
 	}
 	

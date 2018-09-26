@@ -1,11 +1,14 @@
 package com.desmond_david.SpringPaste.dao;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.desmond_david.SpringPaste.entities.User;
@@ -15,6 +18,8 @@ public class UsersDAOImpl implements UsersDAO {
 	
 	@Autowired
 	private SessionFactory factory;
+	Logger logger = Logger.getLogger(this.getClass().getName());
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	public List<User> getUsers() {
@@ -31,7 +36,13 @@ public class UsersDAOImpl implements UsersDAO {
 
 	@Override
 	public void saveUser(User user) {
-		// TODO Auto-generated method stub
+		// Encode the text password
+		String ePassword = passwordEncoder.encode(user.getPassword());
+		ePassword = "{bcrypt}"+ePassword;
+		user.setPassword(ePassword);
+		logger.info(">>>>>New User to save: " + user.toString() + " / " + user.getAuthority().toString());
+		Session session = factory.getCurrentSession();
+		session.save(user);
 	}
 
 	@Override
@@ -42,8 +53,14 @@ public class UsersDAOImpl implements UsersDAO {
 
 	@Override
 	public void deleteUserById(String username) {
-		// TODO Auto-generated method stub
-
+		Session session = factory.getCurrentSession();
+		//Delete all pastes by this user first
+		Query query = session.createQuery("delete from Paste where username=?1");
+		query.setParameter(1, username);
+		query.executeUpdate();
+		//Now delete the user
+		User user = session.get(User.class, username);
+		session.delete(user);
 	}
 
 	@Override

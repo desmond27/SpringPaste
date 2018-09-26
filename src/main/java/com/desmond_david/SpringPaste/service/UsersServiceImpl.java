@@ -22,15 +22,15 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User getUserByName(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public User getUserByName(String username) {		
+		return dao.getUserByName(username);
 	}
 
 	@Override
+	@Transactional
 	public void saveUser(User user) {
-		// TODO Auto-generated method stub
-
+		dao.saveUser(user);
 	}
 
 	@Override
@@ -40,9 +40,9 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteUserById(String username) {
-		// TODO Auto-generated method stub
-
+		dao.deleteUserById(username);
 	}
 
 	@Override

@@ -44,4 +44,10 @@ public class PastesServiceImpl implements PastesService {
 	public void deletePaste(int pasteId) {
 		pastesDAO.deletePaste(pasteId);
 	}
+
+	@Override
+	@Transactional
+	public void togglePasteById(int id) {
+		pastesDAO.togglePasteById(id);
+	}
 }

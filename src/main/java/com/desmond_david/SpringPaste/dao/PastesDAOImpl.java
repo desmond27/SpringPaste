@@ -51,4 +51,12 @@ public class PastesDAOImpl implements PastesDAO {
 		Paste p = session.get(Paste.class, pasteId);
 		session.delete(p);
 	}
+
+	@Override
+	public void togglePasteById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Paste p = session.get(Paste.class, id);
+		p.setPublicPaste(!p.isPublicPaste());
+		session.save(p);
+	}
 }
